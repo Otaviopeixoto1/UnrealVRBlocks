@@ -135,7 +135,7 @@ FTransform ABlockBaseActor::GetSnapedWorldTransform(FTransform objectTransform, 
 
 
 	// Rotation should only be made in yaw (in local space of the actor):
-	float yaw = FMath::Fmod(yawRaw + addedYaw + 360, 360);
+	float yaw = FMath::Fmod(yawRaw + 360, 360);
 
 	// Quantized rotation (only yaw rotation with 0, 90, 180 or 270 degree is allowed):
 	FRotator quantRotation(0, 0, 0);
@@ -169,8 +169,10 @@ FTransform ABlockBaseActor::GetSnapedWorldTransform(FTransform objectTransform, 
 	nTVector.Y = std::round(nTVector.Y);
 	nTVector.Z = std::round(nTVector.Z);
 
-	// Return merged quanized transformation:
-	return (GetActorTransform().Inverse() * FTransform(newTransform.GetRotation(), nTVector)).Inverse();
+	// merged quanized transformation:
+	FTransform quantizedTransform = (GetActorTransform().Inverse() * FTransform(newTransform.GetRotation(), nTVector)).Inverse();
+
+	return FTransform(FRotator(0, addedYaw, 0)) * quantizedTransform;
 
 
 }
