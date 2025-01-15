@@ -120,7 +120,7 @@ ABlockBaseActor *ABlockBaseActor::GetHighlightCopy()
 	return nullptr;
 }
 
-FTransform ABlockBaseActor::GetSnapedWorldTransform(FTransform objectTransform)
+FTransform ABlockBaseActor::GetSnapedWorldTransform(FTransform objectTransform, float addedYaw)
 {
 	// Calculate the delta transformation from actor to this:
 	FTransform deltaTransform = GetActorTransform() * objectTransform.Inverse();
@@ -135,7 +135,7 @@ FTransform ABlockBaseActor::GetSnapedWorldTransform(FTransform objectTransform)
 
 
 	// Rotation should only be made in yaw (in local space of the actor):
-	float yaw = FMath::Fmod(yawRaw + 360, 360);
+	float yaw = FMath::Fmod(yawRaw + addedYaw + 360, 360);
 
 	// Quantized rotation (only yaw rotation with 0, 90, 180 or 270 degree is allowed):
 	FRotator quantRotation(0, 0, 0);

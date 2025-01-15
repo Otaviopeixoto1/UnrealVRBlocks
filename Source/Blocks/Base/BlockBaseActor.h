@@ -54,7 +54,7 @@ public:
 	// Gets the world transform of another object converts and snaps it to the current object orientation
 	// we override the given rot an figure out pos. ignore rot completely
 	UFUNCTION(BlueprintCallable)
-	FTransform GetSnapedWorldTransform(FTransform objectTransform);
+	FTransform GetSnapedWorldTransform(FTransform objectTransform, float addedYaw = 0.0f);
 
 
 	/* Called from the BP_MotionController if the player grabs this actor */
